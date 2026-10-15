@@ -1,0 +1,64 @@
+TASK 8: Capture Network Traffic with Wireshark
+1. Objective
+
+To capture live network traffic on a local Wi-Fi interface using Wireshark, apply display filters to isolate common protocols, inspect packet details, and record basic security observations.
+
+2. Tools and Environment
+Tool: Wireshark
+Operating System: Windows
+Network Interface: Wi-Fi
+Capture File Format: .pcapng
+Packets Captured: Approximately 1,399
+Packets Dropped: 0, as shown in the displayed capture summary
+3. Procedure
+Opened Wireshark on a Windows laptop.
+Selected the Wi-Fi network interface.
+Started capturing live network traffic during normal network activity.
+Applied display filters to isolate specific protocols and TCP traffic.
+Selected packets and examined the packet-details and packet-bytes panes.
+Observed HTTP requests, DNS queries, TCP connections, and TLS application data.
+Captured screenshots showing the filters, packet lists, and packet details for documentation.
+4. Display Filters Used
+Display Filter	Purpose
+http	Displays HTTP requests and responses.
+dns	Displays DNS queries and responses.
+tcp	Displays TCP packets.
+tcp.port == 80	Displays TCP packets where either source or destination port is 80.
+tcp.flags.syn == 1	Displays TCP packets with the SYN flag set, commonly associated with connection establishment.
+tcp.stream == 0	Displays packets belonging to TCP stream number 0.
+5. Observations
+DNS queries and responses were observed, indicating domain-name resolution activity.
+HTTP GET requests for /ncc.txt and HTTP/1.1 200 OK responses were identified.
+TCP packets showed connection-establishment and acknowledgment activity.
+Some packets were identified as TLS Application Data, indicating encrypted application traffic.
+HTTP traffic can expose request paths, headers, and other content to parties capable of capturing unencrypted traffic.
+HTTPS helps protect sensitive information by encrypting communications between endpoints.
+Packet capture alone does not establish that a packet, host, or destination is malicious.
+6. Security Notes
+Prefer HTTPS over HTTP when accessing websites and transmitting sensitive information.
+Avoid transmitting credentials or confidential data over unencrypted connections.
+Use Wireshark filters to investigate unusual traffic and support network troubleshooting.
+Capture traffic only on networks and devices for which you have authorization.
+Protect capture files because they may contain sensitive network metadata or unencrypted application data.
+7. Screenshot Evidence
+
+The project includes the following eight screenshots:
+
+Figure 1: Captured packets and IPv6 network traffic.
+Figure 2: DNS filter showing DNS queries and responses.
+Figure 3: HTTP filter showing GET requests and HTTP 200 OK responses.
+Figure 4: TCP filter showing TCP packets and TLS application data.
+Figure 5: TCP SYN filter showing connection-establishment packets.
+Figure 6: TCP port 80 filter showing HTTP-related traffic.
+Figure 7: TCP stream filter showing packets belonging to a selected stream.
+Figure 8: Additional captured traffic with protocol details visible.
+8. Conclusion
+
+Wireshark was used to capture live Wi-Fi network traffic and analyze it using HTTP, DNS, TCP, port 80, SYN-flag, and TCP-stream display filters. Packet inspection demonstrated how network protocols operate and how unencrypted HTTP traffic differs from encrypted TLS traffic.
+
+The exercise provided practical experience in packet capture, protocol filtering, packet inspection, and basic network security analysis.
+
+9. References
+Wireshark Official Website: https://www.wireshark.org/
+Wireshark User's Guide: https://www.wireshark.org/docs/wsug_html_chunked/
+Wireshark Display Filter Reference: https://www.wireshark.org/docs/dfref/
