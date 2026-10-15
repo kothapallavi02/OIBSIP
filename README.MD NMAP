@@ -1,0 +1,98 @@
+# Task 1: Basic Network Scanning with Nmap
+
+## 1. Objective
+Perform network scanning using Nmap to identify open ports, running services, and operating system information on an authorized local machine or virtual machine.
+
+## 2. Introduction
+Nmap (Network Mapper) is a free, open-source network scanning tool used for network discovery, port scanning, service detection, and security auditing.
+
+Network scanning helps identify exposed services and unnecessary open ports so that appropriate security measures can be applied.
+
+## 3. Tools Used
+- Nmap
+- Kali Linux
+- Linux Terminal
+- VirtualBox (if applicable)
+
+## 4. Installation
+Update the package list:
+
+```bash
+sudo apt update
+```
+
+Install Nmap:
+
+```bash
+sudo apt install nmap -y
+```
+
+Verify the installation:
+
+```bash
+nmap --version
+```
+
+## 5. Scanning Procedure
+
+Replace `[TARGET_IP]` with the actual IP address of your authorized target.
+
+### Basic Scan
+
+```bash
+nmap [TARGET_IP]
+```
+
+This scans commonly used TCP ports and reports their observed states.
+
+### Service Version Detection
+
+```bash
+sudo nmap -sV [TARGET_IP]
+```
+
+This attempts to identify the services and software versions running on detected open ports.
+
+### Operating System Detection
+
+```bash
+sudo nmap -O [TARGET_IP]
+```
+
+This attempts to identify the target operating system. Results may be inconclusive depending on permissions and network conditions.
+
+## 6. Results and Analysis
+The scan results are documented in `nmap_scan_results.txt`.
+
+The report should include:
+- Target IP address
+- Basic scan results
+- Service version scan results
+- OS detection results
+- Open ports and associated services
+- Potential security risks and recommended mitigations
+
+Only include findings observed during your actual scans. If no open ports are detected, document that result accurately.
+
+## 7. Security Recommendations
+- Disable unnecessary services.
+- Restrict access to required ports.
+- Keep services and operating systems updated.
+- Use firewalls to limit network exposure.
+- Review service configurations and authentication settings.
+
+## 8. Screenshots
+The `screenshots/` folder contains evidence of the Nmap version check, basic scan, service version scan, and OS detection scan.
+
+## 9. Ethical Considerations
+- Scan only systems you own or have explicit permission to test.
+- Use an authorized local machine or virtual machine.
+- Never scan external or production systems without authorization.
+- Handle discovered network information responsibly.
+
+## 10. Conclusion
+This task demonstrates basic network scanning, service identification, and OS detection using Nmap. The collected results help assess network exposure and identify opportunities to improve security.
+
+## 11. References
+- Official Nmap Documentation: https://nmap.org/docs.html
+- Nmap Network Scanning Guide: https://nmap.org/book/
