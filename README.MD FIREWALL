@@ -1,0 +1,178 @@
+Task 2 – Basic Firewall Configuration with UFW
+
+Track: Cybersecurity
+Level: 1 – Task 2
+Operating System: Kali Linux
+Virtualization: Oracle VirtualBox
+Tools: UFW, Linux Terminal
+
+1. Objective
+
+The objective of this task is to install and configure the Uncomplicated Firewall (UFW) on Kali Linux, apply firewall rules to allow or deny selected network traffic, and verify that the firewall is enabled and working as configured.
+
+2. Project Overview
+
+UFW (Uncomplicated Firewall) is a command-line firewall management tool for Linux. It simplifies the configuration of network traffic filtering through straightforward commands.
+
+In this task, UFW was installed on a Kali Linux virtual machine, default firewall policies were configured, and rules were added for SSH, HTTP, HTTPS, and a specific example source IP address.
+
+3. Installation and Version Verification
+
+Update the package lists and install UFW:
+
+sudo apt update
+sudo apt install ufw -y
+
+
+Verify the installed version:
+
+sudo ufw version
+
+
+Expected result: UFW version 0.36.2, as recorded during this task.
+
+4. Firewall Configuration
+Set Default Policies
+
+Deny incoming traffic by default and allow outgoing traffic:
+
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+Configure Firewall Rules
+
+Allow SSH connections:
+
+sudo ufw allow ssh
+
+
+Deny incoming HTTP traffic:
+
+sudo ufw deny http
+
+
+Allow incoming HTTPS traffic:
+
+sudo ufw allow 443/tcp
+
+
+Deny traffic from an example source IP address:
+
+sudo ufw deny from 192.0.2.10
+
+
+Note: 192.0.2.10 is a documentation-only example IP address, not a real attacker address.
+
+Enable the Firewall
+
+Enable UFW:
+
+sudo ufw enable
+
+
+Verify the configuration:
+
+sudo ufw status verbose
+
+
+The status output should show Status: active, the default policies, and the configured allow and deny rules.
+
+5. Automation Script
+
+The configuration can be automated using a Bash script named ufw_configuration.sh.
+
+#!/bin/bash
+set -e
+
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run this script using sudo."
+    exit 1
+fi
+
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow ssh
+ufw deny http
+ufw allow 443/tcp
+ufw deny from 192.0.2.10
+ufw --force enable
+ufw status verbose
+
+Run the Script
+
+Save the script and execute:
+
+chmod +x ufw_configuration.sh
+sudo ./ufw_configuration.sh
+
+
+Important: Review the rules before execution. If you are connected remotely through SSH, confirm that the SSH allow rule is appropriate for your environment before enabling the firewall. This script adds rules but does not remove unrelated existing rules.
+
+6. Firewall Rules Summary
+Rule	Purpose
+Default deny incoming	Blocks incoming connections unless permitted by the firewall rules
+Default allow outgoing	Allows outbound connections
+Allow SSH	Permits SSH traffic, typically TCP port 22
+Deny HTTP	Denies incoming HTTP traffic, typically TCP port 80
+Allow HTTPS	Permits incoming TCP traffic on port 443
+Deny source IP	Denies traffic from the specified example source address
+7. Verification and Testing
+
+Check the firewall status and rules:
+
+sudo ufw status verbose
+
+
+Verify that the output includes:
+
+Status: active
+Default incoming policy: deny
+Default outgoing policy: allow
+SSH allow rule
+HTTP deny rule
+HTTPS allow rule
+Example source IP deny rule
+HTTP Blocking Test
+
+The firewall status confirms that the HTTP deny rule is configured. However, this alone does not demonstrate that HTTP traffic was successfully blocked end-to-end.
+
+For additional verification, use a separate authorized test machine running a test web server. Attempt an HTTP connection to the Kali Linux machine and inspect the result. Ensure that the server is listening on the relevant interface and that the test setup isolates other possible causes of connection failure.
+
+Testing status: The HTTP blocking test was not independently demonstrated in the available screenshots.
+
+8. Evidence and Screenshots
+
+Include the following screenshots in the project submission:
+
+UFW Installation: Terminal output showing installation and version verification.
+Firewall Rules: Terminal output showing the default policies and allow/deny commands.
+Firewall Status: Output of sudo ufw status verbose showing the active firewall and configured rules.
+Automation Script: The contents of ufw_configuration.sh.
+Optional Traffic Test: Results from an authorized HTTP connectivity test.
+
+Use descriptive filenames, for example:
+
+ufw_installation.png
+ufw_rules.png
+ufw_status.png
+ufw_configuration_script.png
+http_blocking_test.png
+
+Only include screenshots and test results that you actually captured.
+
+9. Security Considerations
+Allow only the services required by the system.
+Restrict SSH access to trusted sources when possible.
+Review existing firewall rules before making changes.
+Test firewall behavior in an authorized environment.
+Do not treat configured rules as proof of successful end-to-end filtering without appropriate testing.
+10. Conclusion
+
+UFW was installed and configured on Kali Linux. The default incoming policy was set to deny, while outgoing traffic was allowed. Additional rules were configured to permit SSH and HTTPS, deny HTTP, and block traffic from an example source IP address.
+
+This task demonstrates basic Linux firewall administration, rule configuration, automation with Bash, and verification of firewall status. Further network testing can provide additional evidence that the rules behave as intended.
+
+11. Reference
+
+Ubuntu Community Help Wiki – UncomplicatedFirewall (UFW):
+https://help.ubuntu.com/community/UFW
